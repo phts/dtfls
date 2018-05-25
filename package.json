@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Backup/restore your config files",
   "main": "index.js",
+  "engines": {
+    "node": ">=6.4.0"
+  },
+  "engineStrict": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/phts/dtfls.git"
@@ -18,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/phts/dtfls/issues"
   },
-  "homepage": "https://github.com/phts/dtfls#readme"
+  "homepage": "https://github.com/phts/dtfls#readme",
+  "dependencies": {
+    "commander": "^2.15.1",
+    "require-directory": "^2.1.1"
+  }
 }
