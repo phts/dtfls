@@ -1,0 +1,22 @@
+{
+  "name": "dtfls",
+  "version": "0.0.1",
+  "description": "Backup/restore your config files",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phts/dtfls.git"
+  },
+  "keywords": [
+    "backup",
+    "config",
+    "configs",
+    "dotfiles"
+  ],
+  "author": "Phil Tsarik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phts/dtfls/issues"
+  },
+  "homepage": "https://github.com/phts/dtfls#readme"
+}
