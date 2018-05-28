@@ -22,7 +22,7 @@
     "dotfiles"
   ],
   "author": "Phil Tsarik",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/phts/dtfls/issues"
   },
