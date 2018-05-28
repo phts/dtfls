@@ -7,6 +7,10 @@
     "node": ">=6.4.0"
   },
   "engineStrict": true,
+  "scripts": {
+    "clean-fixtures": "node ./scripts/cleanFixtures.js",
+    "test": "mocha test/*.test.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/phts/dtfls.git"
@@ -25,6 +29,15 @@
   "homepage": "https://github.com/phts/dtfls#readme",
   "dependencies": {
     "commander": "^2.15.1",
-    "require-directory": "^2.1.1"
+    "require-directory": "^2.1.1",
+    "shell-escape": "^0.2.0",
+    "shelljs": "^0.8.2",
+    "untildify": "^3.0.3"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^5.2.0",
+    "mock-require": "^3.0.2",
+    "sinon": "^5.0.10"
   }
 }

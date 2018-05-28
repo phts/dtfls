@@ -3,6 +3,10 @@
 const packageJson = require('./package.json')
 const program = require('commander')
 
+const sh = require('shelljs')
+sh.config.silent = true
+sh.config.verbose = false
+
 const commands = require('./commands')
 
 program
