@@ -84,11 +84,11 @@ describe('#diff', () => {
         expect(output).to.contain('No such file or directory')
         expect(output).not.to.contain(`< ${app} local new line`)
         expect(output).not.to.contain(`> ${app} sys new line`)
-      } : undefined);
-    });
+      } : undefined)
+    })
 
     describe('when running on Unix', () => {
       itPrintsDifference(() => ({output, app}), isWindows)
-    });
+    })
   })
 })
