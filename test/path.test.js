@@ -1,3 +1,5 @@
+require('./setupTests')
+
 const expect = require('expect.js')
 const path = require('path')
 const mock = require('mock-require')

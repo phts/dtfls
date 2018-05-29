@@ -1,3 +1,5 @@
+require('./setupTests')
+
 const expect = require('expect.js')
 const sh = require('shelljs')
 const sinon = require('sinon')
