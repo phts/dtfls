@@ -8,8 +8,8 @@ const SYSCONF_FOLDER = path.join(sh.tempdir(), 'dtfls - user home config mocks')
 module.exports = {
   LOCALCONF_FOLDER,
   SYSCONF_FOLDER,
-  setupFixtures() {
-    if (!sh.test('-e', LOCALCONF_FOLDER)) {
+  setupFixtures(opts = {}) {
+    if (opts.forceLocal || !sh.test('-e', LOCALCONF_FOLDER)) {
       sh.mkdir('-p', LOCALCONF_FOLDER)
 
       const appWithDotfileFolder = path.join(LOCALCONF_FOLDER, 'app-with-rootdotfile')
