@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Back up and restore your config files",
   "main": "index.js",
+  "bin": "index.js",
   "engines": {
     "node": ">=6.4.0"
   },
