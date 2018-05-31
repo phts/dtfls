@@ -9,7 +9,10 @@ module.exports = {
     const output = []
 
     forEachFileOfEachApp(apps, ({localconfFile, sysconfFile}) => {
-      sh.cp(sysconfFile, localconfFile)
+      const result = sh.cp(sysconfFile, localconfFile)
+      if (result.stdout || result.stderr) {
+        output.push(result.stdout || result.stderr)
+      }
     })
 
     return output.join('\n')
