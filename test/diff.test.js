@@ -31,15 +31,15 @@ describe('#diff', () => {
   })
 
   function itPrintsDifference(context, disabled) {
-    it('prints different lines from local files', disabled ? undefined : () => {
+    it('prints different lines from local files', disabled ? null : () => {
       expect(context().output).to.contain(`< ${context().app} local new line`)
     })
 
-    it('prints different lines from system files', disabled ? undefined : () => {
+    it('prints different lines from system files', disabled ? null : () => {
       expect(context().output).to.contain(`> ${context().app} sys new line`)
     })
 
-    it('does not print equal lines', disabled ? undefined : () => {
+    it('does not print equal lines', disabled ? null : () => {
       expect(context().output).not.to.contain('eq-line1')
       expect(context().output).not.to.contain('eq-line2')
       expect(context().output).not.to.contain('eq-line3')
@@ -84,10 +84,10 @@ describe('#diff', () => {
         expect(output).to.contain('No such file or directory')
         expect(output).not.to.contain(`< ${app} local new line`)
         expect(output).not.to.contain(`> ${app} sys new line`)
-      } : undefined)
+      } : null)
     })
 
-    describe('when running on Unix', () => {
+    describe('when running on *nix', () => {
       itPrintsDifference(() => ({output, app}), isWindows)
     })
   })

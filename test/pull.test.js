@@ -13,9 +13,12 @@ const {
 const pathCommand = require('../commands/path')
 const pull = require('../commands/pull').action
 
+const isWindows = process.platform === 'win32'
+
 describe('#pull', () => {
   let pathCommandStub
   let app
+  let output
 
   before(() => {
     setupFixtures()
@@ -29,8 +32,8 @@ describe('#pull', () => {
     sh.cd('-')
   })
 
-  function itCopiesFilesSuccessfully(context) {
-    it('copies files which exist in local config folder from system config folder', () => {
+  function itCopiesFilesSuccessfully(context, disabled) {
+    it('copies files which exist in local config folder from system config folder', disabled ? null : () => {
       sh.find(path.join(LOCALCONF_FOLDER, context().app)).forEach(localconfFile => {
         if (!sh.test('-f', localconfFile)) {
           return
@@ -41,7 +44,7 @@ describe('#pull', () => {
       })
     })
 
-    it('does not amend system config files', () => {
+    it('does not amend system config files', disabled ? null : () => {
       sh.find(SYSCONF_FOLDER).forEach(sysconfFile => {
         if (!sh.test('-f', sysconfFile)) {
           return
@@ -83,9 +86,19 @@ describe('#pull', () => {
   describe('when app contains non-ascii characters', () => {
     before(() => {
       app = 'app-with-non-ascii'
-      pull([app])
+      output = pull([app])
     })
 
-    itCopiesFilesSuccessfully(() => ({app}))
+    describe('when running on Windows', () => {
+      it('does not support non-ascii characters', isWindows ? () => {
+        expect(output).to.contain('no such file or directory')
+        expect(output).not.to.contain(`< ${app} local new line`)
+        expect(output).not.to.contain(`> ${app} sys new line`)
+      } : null)
+    })
+
+    describe('when running on *nix', () => {
+      itCopiesFilesSuccessfully(() => ({app}), isWindows)
+    })
   })
 })
