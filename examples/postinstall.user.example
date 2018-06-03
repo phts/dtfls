@@ -1,9 +1,0 @@
-app="$1"
-
-case $app in
-  some-app)
-    cd ~/.config/some-app
-    # perform here some app-specific actions
-    cd -
-    ;;
-esac

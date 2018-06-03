@@ -1,9 +1,6 @@
-const fs = require('fs')
 const path = require('path')
-const sh = require('shelljs')
-const shellescape = require('shell-escape')
 
-const POSTINSTALL_USER_FILENAME = 'postinstall.user'
+const POSTINSTALL_USER_FILENAME = 'postinstall.user.js'
 
 module.exports = {
   command: 'postinstall <app...>',
@@ -11,15 +8,17 @@ module.exports = {
   action: apps => {
     const postinstallUserFile = path.resolve(process.cwd(), POSTINSTALL_USER_FILENAME)
 
-    if (!fs.existsSync(postinstallUserFile)) {
+    let userPostintall
+    try {
+      userPostintall = require(postinstallUserFile)
+    } catch (e) {
       return
     }
 
     apps
       .map(x => x.replace(/[/\\]/g, ''))
       .forEach(app => {
-        const execArgs = shellescape([postinstallUserFile, app])
-        sh.exec(`bash ${execArgs}`, {silent: false})
+        userPostintall(app)
       })
   },
 }
