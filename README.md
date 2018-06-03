@@ -56,7 +56,7 @@ Mapping of local path to system path for particular configs can be changed
 with a file [`path.user.json`](https://github.com/phts/dtfls/blob/master/examples/path.user.json.example).
 
 Additionally there is a support for post-install scripts. They can be
-added in [`postinstall.user.js`](https://github.com/phts/dtfls/blob/master/examples/postinstall.user.js.example) file.
+added in [`postinstall.user`](https://github.com/phts/dtfls/blob/master/examples/postinstall.user.example) file.
 
 ## Example
 
