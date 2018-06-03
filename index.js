@@ -38,6 +38,7 @@ for (const command in commands) {
 
 program.parse(process.argv)
 
-if (program.args.length < 1 ) {
+const NO_COMMAND_SPECIFIED = !process.argv.slice(2).length
+if (NO_COMMAND_SPECIFIED) {
   program.help()
 }

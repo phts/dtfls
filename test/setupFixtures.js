@@ -40,7 +40,7 @@ module.exports = {
       fs.writeFileSync(path.join(appWithNonAscii, 'new конфиг.txt'), 'eq-line1\neq-line2\neq-line3')
     }
 
-    if (!sh.test('-e', SYSCONF_FOLDER)) {
+    if (opts.forceSystem || !sh.test('-e', SYSCONF_FOLDER)) {
       sh.mkdir('-p', SYSCONF_FOLDER)
 
       fs.writeFileSync(path.join(SYSCONF_FOLDER, '.eq-rootconfig'), 'eq-line1\neq-line2\neq-line3')
