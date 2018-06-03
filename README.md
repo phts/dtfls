@@ -6,7 +6,11 @@ Back up and restore your config files.
 
 This is a port of [dotfiles](https://github.com/phts/dotfiles) to Node.js.
 
-## Installing
+## Requirements
+
+* Node v6.0.0 or higher
+
+## Install
 
 **via npm**:
 
