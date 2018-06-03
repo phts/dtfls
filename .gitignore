@@ -2,3 +2,5 @@ node_modules/
 __fixtures/
 
 *.stackdump
+*.sublime-project
+*.sublime-workspace
