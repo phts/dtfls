@@ -2,6 +2,7 @@ require('./setupTests')
 
 const expect = require('expect.js')
 const path = require('path')
+const fs = require('fs')
 const sh = require('shelljs')
 const sinon = require('sinon')
 
@@ -16,19 +17,18 @@ const pull = require('../commands/pull').action
 const isWindows = process.platform === 'win32'
 
 describe('#pull', () => {
-  let pathCommandStub
   let app
   let output
 
   before(() => {
     setupFixtures()
-    pathCommandStub = sinon.stub(pathCommand, 'action').callsFake(() => SYSCONF_FOLDER)
+    sinon.stub(pathCommand, 'action').callsFake(() => SYSCONF_FOLDER)
     sh.cd(LOCALCONF_FOLDER)
   })
 
   after(() => {
     setupFixtures({forceLocal: true})
-    pathCommandStub.restore()
+    pathCommand.action.restore()
     sh.cd('-')
   })
 
@@ -38,7 +38,7 @@ describe('#pull', () => {
         if (!sh.test('-f', localconfFile)) {
           return
         }
-        const localconfFileContent = sh.cat(localconfFile).stdout
+        const localconfFileContent = fs.readFileSync(localconfFile).toString()
         expect(localconfFileContent).not.to.equal('')
         expect(localconfFileContent).not.to.contain('local')
       })
@@ -49,7 +49,7 @@ describe('#pull', () => {
         if (!sh.test('-f', sysconfFile)) {
           return
         }
-        const sysconfFileContent = sh.cat(sysconfFile).stdout
+        const sysconfFileContent = fs.readFileSync(sysconfFile).toString()
         expect(sysconfFileContent).not.to.equal('')
         expect(sysconfFileContent).not.to.contain('local')
       })

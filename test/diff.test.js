@@ -15,18 +15,17 @@ const diff = require('../commands/diff').action
 const isWindows = process.platform === 'win32'
 
 describe('#diff', () => {
-  let pathCommandStub
   let app
   let output
 
   before(() => {
     setupFixtures()
-    pathCommandStub = sinon.stub(pathCommand, 'action').callsFake(() => SYSCONF_FOLDER)
+    sinon.stub(pathCommand, 'action').callsFake(() => SYSCONF_FOLDER)
     sh.cd(LOCALCONF_FOLDER)
   })
 
   after(() => {
-    pathCommandStub.restore()
+    pathCommand.action.restore()
     sh.cd('-')
   })
 
