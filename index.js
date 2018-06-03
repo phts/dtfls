@@ -13,7 +13,7 @@ program
   .name(packageJson.name)
   .version(packageJson.version)
   .allowUnknownOption(false)
-  .usage('<command> [options] <app...>')
+  .usage('[options] <command>')
   .action(() => program.help())
 
 for (const command in commands) {
