@@ -5,22 +5,22 @@ const path = require('path')
 const sh = require('shelljs')
 const sinon = require('sinon')
 
-const setupFixtures = require('./setupFixtures').setupFixtures
+const {
+  LOCALCONF_FOLDER,
+  SYSCONF_FOLDER,
+  setupFixtures,
+} = require('./setupFixtures')
 const pathCommand = require('../commands/path')
 const pull = require('../commands/pull').action
 
 describe('#pull', () => {
   let pathCommandStub
-  let sysconfFolder
-  let localconfFolder
   let app
 
   before(() => {
-    const fixtures = setupFixtures()
-    localconfFolder = fixtures.LOCALCONF_FOLDER
-    sysconfFolder = fixtures.SYSCONF_FOLDER
-    pathCommandStub = sinon.stub(pathCommand, 'action').callsFake(() => sysconfFolder)
-    sh.cd(localconfFolder)
+    setupFixtures()
+    pathCommandStub = sinon.stub(pathCommand, 'action').callsFake(() => SYSCONF_FOLDER)
+    sh.cd(LOCALCONF_FOLDER)
   })
 
   after(() => {
@@ -31,7 +31,7 @@ describe('#pull', () => {
 
   function itCopiesFilesSuccessfully(context) {
     it('copies files which exist in local config folder from system config folder', () => {
-      sh.find(path.join(localconfFolder, context().app)).forEach(localconfFile => {
+      sh.find(path.join(LOCALCONF_FOLDER, context().app)).forEach(localconfFile => {
         if (!sh.test('-f', localconfFile)) {
           return
         }
@@ -42,7 +42,7 @@ describe('#pull', () => {
     })
 
     it('does not amend system config files', () => {
-      sh.find(sysconfFolder).forEach(sysconfFile => {
+      sh.find(SYSCONF_FOLDER).forEach(sysconfFile => {
         if (!sh.test('-f', sysconfFile)) {
           return
         }

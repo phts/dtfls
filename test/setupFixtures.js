@@ -64,11 +64,6 @@ module.exports = {
       fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг1.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг2.txt'), 'eq-line1\neq-line2\napp-with-non-ascii sys new line\neq-line3')
     }
-
-    return {
-      LOCALCONF_FOLDER,
-      SYSCONF_FOLDER,
-    }
   },
   cleanFixtures() {
     sh.rm('-r', LOCALCONF_FOLDER, SYSCONF_FOLDER)

@@ -4,7 +4,11 @@ const expect = require('expect.js')
 const sh = require('shelljs')
 const sinon = require('sinon')
 
-const setupFixtures = require('./setupFixtures').setupFixtures
+const {
+  LOCALCONF_FOLDER,
+  SYSCONF_FOLDER,
+  setupFixtures,
+} = require('./setupFixtures')
 const pathCommand = require('../commands/path')
 const diff = require('../commands/diff').action
 
@@ -12,17 +16,13 @@ const isWindows = process.platform === 'win32'
 
 describe('#diff', () => {
   let pathCommandStub
-  let sysconfFolder
-  let localconfFolder
   let app
   let output
 
   before(() => {
-    const fixtures = setupFixtures()
-    localconfFolder = fixtures.LOCALCONF_FOLDER
-    sysconfFolder = fixtures.SYSCONF_FOLDER
-    pathCommandStub = sinon.stub(pathCommand, 'action').callsFake(() => sysconfFolder)
-    sh.cd(localconfFolder)
+    setupFixtures()
+    pathCommandStub = sinon.stub(pathCommand, 'action').callsFake(() => SYSCONF_FOLDER)
+    sh.cd(LOCALCONF_FOLDER)
   })
 
   after(() => {
