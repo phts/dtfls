@@ -14,8 +14,6 @@ const {
 const pathCommand = require('../commands/path')
 const postinstallCommand = require('../commands/postinstall')
 
-const isWindows = process.platform === 'win32'
-
 describe('#install', () => {
   let program
   let install
@@ -47,8 +45,8 @@ describe('#install', () => {
     postinstallCommand.action.resetHistory()
   })
 
-  function itCopiesFilesSuccessfully(context, disabled) {
-    it('copies local config files to system config folder', disabled ? null : () => {
+  function itCopiesFilesSuccessfully(context) {
+    it('copies local config files to system config folder', () => {
       const sysSubfolder = path.join(SYSCONF_FOLDER, context().subfolder)
       let fileCount = 0
       sh.find(sysSubfolder).forEach(sysconfFile => {
@@ -66,7 +64,7 @@ describe('#install', () => {
       expect(fileCount).to.be(context().totalFiles)
     })
 
-    it('does not amend local config files', disabled ? null : () => {
+    it('does not amend local config files', () => {
       sh.find(LOCALCONF_FOLDER).forEach(localconfFile => {
         if (!sh.test('-f', localconfFile)) {
           return
@@ -117,20 +115,10 @@ describe('#install', () => {
     describe('when app contains non-ascii characters', () => {
       beforeEach(() => {
         app = 'app-with-non-ascii'
-        output = install([app], program)
+        install([app], program)
       })
 
-      describe('when running on Windows', () => {
-        it('does not support non-ascii characters', isWindows ? () => {
-          expect(output).to.contain('no such file or directory')
-          expect(output).not.to.contain(`< ${app} local new line`)
-          expect(output).not.to.contain(`> ${app} sys new line`)
-        } : null)
-      })
-
-      describe('when running on *nix', () => {
-        itCopiesFilesSuccessfully(() => ({app, subfolder: 'приложение', totalFiles: 4}), isWindows)
-      })
+      itCopiesFilesSuccessfully(() => ({app, subfolder: 'приложение', totalFiles: 4}))
     })
   })
 
