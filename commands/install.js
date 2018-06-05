@@ -12,12 +12,13 @@ module.exports = {
   ],
   action: (apps, program) => {
     const output = new CommandResult()
-    if (program.backup) {
-      output.addString('--backup option is not implemented yet.\nAborted.')
-      return output.toString()
-    }
 
     forEachFileOfEachApp(apps, ({localconfFile, sysconfFile}) => {
+      if (program.backup) {
+        const result = sh.cp(sysconfFile, `${sysconfFile}.bak`)
+        output.addShellOutput(result)
+      }
+
       const result = sh.cp(localconfFile, sysconfFile)
       output.addShellOutput(result)
     })

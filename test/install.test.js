@@ -14,11 +14,12 @@ const {
 const pathCommand = require('../commands/path')
 const postinstallCommand = require('../commands/postinstall')
 
+const BACKUP_FILE_EXT = '.bak'
+
 describe('#install', () => {
   let program
   let install
   let app
-  let output
   let originalPostinstallCommand
 
   before(() => {
@@ -35,28 +36,29 @@ describe('#install', () => {
   })
 
   after(() => {
-    setupFixtures({forceSystem: true})
     pathCommand.action.restore()
     postinstallCommand.action = originalPostinstallCommand
     sh.cd('-')
   })
 
   function itCopiesFilesSuccessfully(context) {
-    it('copies local config files to system config folder', () => {
+    function getFilesInSysconfSubfolder() {
       const sysSubfolder = path.join(SYSCONF_FOLDER, context().subfolder)
+      return sh.find(sysSubfolder)
+        .filter(f => sh.test('-f', f))
+        .filter(f => path.dirname(f).replace(/\\/g, '/') === sysSubfolder.replace(/\\/g, '/'))
+    }
+
+    it('copies local config files to system config folder', () => {
       let fileCount = 0
-      sh.find(sysSubfolder).forEach(sysconfFile => {
-        if (!sh.test('-f', sysconfFile)) {
-          return
-        }
-        if (path.dirname(sysconfFile).replace(/\\/g, '/') !== sysSubfolder.replace(/\\/g, '/')) {
-          return
-        }
-        const sysconfFileContent = fs.readFileSync(sysconfFile).toString()
-        expect(sysconfFileContent).not.to.equal('')
-        expect(sysconfFileContent).not.to.contain('sys')
-        fileCount++
-      })
+      getFilesInSysconfSubfolder()
+        .filter(f => !context().withBackup || context().withBackup && !f.includes(BACKUP_FILE_EXT))
+        .forEach(sysconfFile => {
+          const sysconfFileContent = fs.readFileSync(sysconfFile).toString()
+          expect(sysconfFileContent).not.to.equal('')
+          expect(sysconfFileContent).not.to.contain('sys')
+          fileCount++
+        })
       expect(fileCount).to.be(context().totalFiles)
     })
 
@@ -80,9 +82,24 @@ describe('#install', () => {
       const args = postinstallCommand.action.getCall(0).args
       expect(args[0]).to.eql([context().app])
     })
+
+    if (context().withBackup) {
+      it(`creates a file with ${BACKUP_FILE_EXT} extension near original file with original content`, () => {
+        getFilesInSysconfSubfolder()
+          .filter(f => !f.includes(BACKUP_FILE_EXT))
+          .forEach(sysconfFile => {
+            const bakFile = sysconfFile + BACKUP_FILE_EXT
+            expect(sh.test('-f', bakFile)).to.be(true)
+
+            const bakFileContent = fs.readFileSync(bakFile).toString()
+            expect(bakFileContent).not.to.equal('')
+            expect(bakFileContent).not.to.contain('local')
+          })
+      })
+    }
   }
 
-  describe('when command called without --backup option', () => {
+  function testAllCases(opts = {}) {
     describe('when app has config files directly in home dir', () => {
       before(() => {
         postinstallCommand.action.resetHistory()
@@ -94,6 +111,7 @@ describe('#install', () => {
         app,
         subfolder: '',
         totalFiles: 3,
+        withBackup: opts.withBackup,
       }))
     })
 
@@ -108,6 +126,7 @@ describe('#install', () => {
         app,
         subfolder: path.join('app-with-nested-folders', 'nested1', 'nested2'),
         totalFiles: 4,
+        withBackup: opts.withBackup,
       }))
     })
 
@@ -122,6 +141,7 @@ describe('#install', () => {
         app,
         subfolder: 'configs with space',
         totalFiles: 4,
+        withBackup: opts.withBackup,
       }))
     })
 
@@ -136,19 +156,34 @@ describe('#install', () => {
         app,
         subfolder: 'приложение',
         totalFiles: 4,
+        withBackup: opts.withBackup,
       }))
     })
+  }
+
+  describe('when command called without --backup option', () => {
+    after(() => {
+      setupFixtures({forceSystem: true})
+    })
+
+    testAllCases()
   })
 
   describe('when command called with --backup option', () => {
     before(() => {
       app = 'anyapp'
       program.backup = true
-      output = install([app], program)
     })
 
-    it('is not implemented yet', () => {
-      expect(output).to.contain('is not implemented yet')
+    after(() => {
+      setupFixtures({forceSystem: true})
+      sh.find(path.join(SYSCONF_FOLDER))
+        .filter(f => f.includes(BACKUP_FILE_EXT))
+        .forEach(file => {
+          fs.unlinkSync(file)
+        })
     })
+
+    testAllCases({withBackup: true})
   })
 })
