@@ -31,6 +31,7 @@ describe('#install', () => {
 
   before(() => {
     install = require('../commands/install').action
+    program = {}
   })
 
   after(() => {
@@ -38,11 +39,6 @@ describe('#install', () => {
     pathCommand.action.restore()
     postinstallCommand.action = originalPostinstallCommand
     sh.cd('-')
-  })
-
-  beforeEach(() => {
-    program = {}
-    postinstallCommand.action.resetHistory()
   })
 
   function itCopiesFilesSuccessfully(context) {
@@ -75,10 +71,12 @@ describe('#install', () => {
       })
     })
 
-    it('calls postinstall script for this app', () => {
+    it('calls postinstall script only once', () => {
       expect(postinstallCommand.action.called).to.be(true)
       expect(postinstallCommand.action.calledOnce).to.be(true)
+    })
 
+    it('calls postinstall script for this app only', () => {
       const args = postinstallCommand.action.getCall(0).args
       expect(args[0]).to.eql([context().app])
     })
@@ -86,44 +84,64 @@ describe('#install', () => {
 
   describe('when command called without --backup option', () => {
     describe('when app has config files directly in home dir', () => {
-      beforeEach(() => {
+      before(() => {
+        postinstallCommand.action.resetHistory()
         app = 'app-with-rootdotfile'
         install([app], program)
       })
 
-      itCopiesFilesSuccessfully(() => ({app, subfolder: '', totalFiles: 3}))
+      itCopiesFilesSuccessfully(() => ({
+        app,
+        subfolder: '',
+        totalFiles: 3,
+      }))
     })
 
     describe('when app has config files in nested fodlers', () => {
-      beforeEach(() => {
+      before(() => {
+        postinstallCommand.action.resetHistory()
         app = 'app-with-nested-folders'
         install([app], program)
       })
 
-      itCopiesFilesSuccessfully(() => ({app, subfolder: path.join('app-with-nested-folders', 'nested1', 'nested2'), totalFiles: 4}))
+      itCopiesFilesSuccessfully(() => ({
+        app,
+        subfolder: path.join('app-with-nested-folders', 'nested1', 'nested2'),
+        totalFiles: 4,
+      }))
     })
 
     describe('when app has whitespace in file names', () => {
-      beforeEach(() => {
+      before(() => {
+        postinstallCommand.action.resetHistory()
         app = 'app-with-space'
         install([app], program)
       })
 
-      itCopiesFilesSuccessfully(() => ({app, subfolder: 'configs with space', totalFiles: 4}))
+      itCopiesFilesSuccessfully(() => ({
+        app,
+        subfolder: 'configs with space',
+        totalFiles: 4,
+      }))
     })
 
     describe('when app contains non-ascii characters', () => {
-      beforeEach(() => {
+      before(() => {
+        postinstallCommand.action.resetHistory()
         app = 'app-with-non-ascii'
         install([app], program)
       })
 
-      itCopiesFilesSuccessfully(() => ({app, subfolder: 'приложение', totalFiles: 4}))
+      itCopiesFilesSuccessfully(() => ({
+        app,
+        subfolder: 'приложение',
+        totalFiles: 4,
+      }))
     })
   })
 
   describe('when command called with --backup option', () => {
-    beforeEach(() => {
+    before(() => {
       app = 'anyapp'
       program.backup = true
       output = install([app], program)
