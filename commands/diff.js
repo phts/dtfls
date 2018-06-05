@@ -1,23 +1,21 @@
 const sh = require('shelljs')
 const shellescape = require('shell-escape')
 
+const CommandResult = require('../utils/CommandResult')
 const forEachFileOfEachApp = require('../utils/forEachFileOfEachApp')
 
 module.exports = {
   command: 'diff <app...>',
   description: 'print difference between local and outside configs',
   action: apps => {
-    const output = []
+    const output = new CommandResult()
 
     forEachFileOfEachApp(apps, ({localconfFile, sysconfFile}) => {
       const diffArgs = shellescape(['-r', '--ignore-all-space', localconfFile, sysconfFile])
-      const diff = sh.exec(`diff ${diffArgs}`)
-      if (diff.stdout || diff.stderr) {
-        output.push(`${localconfFile} <=> ${sysconfFile}`)
-        output.push(diff.stdout || diff.stderr)
-      }
+      const result = sh.exec(`diff ${diffArgs}`)
+      output.addShellOutput(result, {prepend: `${localconfFile} <=> ${sysconfFile}`})
     })
 
-    return output.join('\n')
+    return output.toString()
   },
 }

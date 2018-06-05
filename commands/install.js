@@ -1,6 +1,7 @@
 const sh = require('shelljs')
 
 const postinstall = require('./postinstall').action
+const CommandResult = require('../utils/CommandResult')
 const forEachFileOfEachApp = require('../utils/forEachFileOfEachApp')
 
 module.exports = {
@@ -10,23 +11,21 @@ module.exports = {
     ['--backup', 'create backups of original files'],
   ],
   action: (apps, program) => {
-    const output = []
+    const output = new CommandResult()
     if (program.backup) {
-      output.push('--backup option is not implemented yet.\nAborted.')
-      return output.join('\n')
+      output.addString('--backup option is not implemented yet.\nAborted.')
+      return output.toString()
     }
 
     forEachFileOfEachApp(apps, ({localconfFile, sysconfFile}) => {
       const result = sh.cp(localconfFile, sysconfFile)
-      if (result.stdout || result.stderr) {
-        output.push(result.stdout || result.stderr)
-      }
+      output.addShellOutput(result)
     })
 
     apps.forEach(app => {
       postinstall([app])
     })
 
-    return output.join('\n')
+    return output.toString()
   },
 }
