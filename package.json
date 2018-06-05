@@ -1,6 +1,6 @@
 {
   "name": "dtfls",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Back up and restore your config files",
   "main": "index.js",
   "bin": "index.js",
