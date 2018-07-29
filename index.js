@@ -20,6 +20,7 @@ for (const command in commands) {
   const data = commands[command]
   const cmd = program
     .command(data.command)
+    .alias(data.alias)
     .description(data.description)
 
   if (data.options) {

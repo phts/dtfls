@@ -6,6 +6,7 @@ const forEachFileOfEachApp = require('../utils/forEachFileOfEachApp')
 
 module.exports = {
   command: 'install <app...>',
+  alias: 'i',
   description: 'install local configs to the system',
   options: [
     ['--backup', 'create backups of original files'],

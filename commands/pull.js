@@ -5,6 +5,7 @@ const forEachFileOfEachApp = require('../utils/forEachFileOfEachApp')
 
 module.exports = {
   command: 'pull <app...>',
+  alias: 'p',
   description: 'pull configs from the system to the local folder',
   action: apps => {
     const output = new CommandResult()
