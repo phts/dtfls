@@ -1,4 +1,6 @@
 const path = require('path')
+const sh = require('shelljs')
+const fs = require('fs')
 
 const DEFAULT_PATH = '~'
 const PATH_USER_FILENAME = 'path.user.json'
@@ -8,17 +10,12 @@ module.exports = {
   description: 'print system installation path',
   action: app => {
     const pathUserFile = path.resolve(process.cwd(), PATH_USER_FILENAME)
-    let userPaths
-    try {
-      userPaths = require(pathUserFile)
-    } catch (e) {
-      userPaths = null
-    }
-
-    if (!userPaths || !userPaths[app]) {
+    if (!sh.test('-f', pathUserFile)) {
       return DEFAULT_PATH
     }
 
-    return userPaths[app]
+    const userPaths = JSON.parse(fs.readFileSync(pathUserFile))
+    const userPath = userPaths && userPaths[app]
+    return userPath || DEFAULT_PATH
   },
 }
