@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const sh = require('shelljs')
 const shellescape = require('shell-escape')
+const withoutSlash = require('../utils/withoutSlash')
 
 const POSTINSTALL_USER_FILENAME = 'postinstall.user'
 
@@ -16,7 +17,7 @@ module.exports = {
     }
 
     apps
-      .map(x => x.replace(/[/\\]/g, ''))
+      .map(withoutSlash)
       .forEach(app => {
         const execArgs = shellescape([postinstallUserFile, app])
         sh.exec(`bash ${execArgs}`, {silent: false})

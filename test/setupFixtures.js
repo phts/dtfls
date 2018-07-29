@@ -38,6 +38,13 @@ module.exports = {
       fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг1.txt'), 'eq-line1\neq-line2\napp-with-non-ascii local new line\neq-line3')
       fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг2.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithNonAscii, 'new конфиг.txt'), 'eq-line1\neq-line2\neq-line3')
+
+      const appWithSlash = path.join(LOCALCONF_FOLDER, 'app-with-slash', 'app-with-slash')
+      sh.mkdir('-p', appWithSlash)
+      fs.writeFileSync(path.join(appWithSlash, 'eqfile.txt'), 'eq-line1\neq-line2\neq-line3')
+      fs.writeFileSync(path.join(appWithSlash, 'dffile1.txt'), 'eq-line1\neq-line2\napp-with-slash local new line\neq-line3')
+      fs.writeFileSync(path.join(appWithSlash, 'dffile2.txt'), 'eq-line1\neq-line2\neq-line3')
+      fs.writeFileSync(path.join(appWithSlash, 'newfile.txt'), 'eq-line1\neq-line2\neq-line3')
     }
 
     if (opts.forceSystem || !sh.test('-e', SYSCONF_FOLDER)) {
@@ -63,6 +70,12 @@ module.exports = {
       fs.writeFileSync(path.join(appWithNonAscii, 'eq конфиг.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг1.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг2.txt'), 'eq-line1\neq-line2\napp-with-non-ascii sys new line\neq-line3')
+
+      const appWithSlash = path.join(SYSCONF_FOLDER, 'app-with-slash')
+      sh.mkdir('-p', appWithSlash)
+      fs.writeFileSync(path.join(appWithSlash, 'eqfile.txt'), 'eq-line1\neq-line2\neq-line3')
+      fs.writeFileSync(path.join(appWithSlash, 'dffile1.txt'), 'eq-line1\neq-line2\neq-line3')
+      fs.writeFileSync(path.join(appWithSlash, 'dffile2.txt'), 'eq-line1\neq-line2\napp-with-slash sys new line\neq-line3')
     }
   },
   cleanFixtures() {

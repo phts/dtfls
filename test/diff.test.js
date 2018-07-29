@@ -90,4 +90,13 @@ describe('#diff', () => {
       itPrintsDifference(() => ({output, app}), isWindows)
     })
   })
+
+  describe('when command is called with a slash in the app name', () => {
+    before(() => {
+      app = 'app-with-slash'
+      output = diff([`${app}/`])
+    })
+
+    itPrintsDifference(() => ({output, app}))
+  })
 })

@@ -88,4 +88,13 @@ describe('#pull', () => {
 
     itCopiesFilesSuccessfully(() => ({app}))
   })
+
+  describe('when command is called with a slash in the app name', () => {
+    before(() => {
+      app = 'app-with-slash/'
+      pull([app])
+    })
+
+    itCopiesFilesSuccessfully(() => ({app}))
+  })
 })

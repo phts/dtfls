@@ -159,6 +159,21 @@ describe('#install', () => {
         withBackup: opts.withBackup,
       }))
     })
+
+    describe('when command is called with a slash in the app name', () => {
+      before(() => {
+        postinstallCommand.action.resetHistory()
+        app = 'app-with-slash/'
+        install([app], program)
+      })
+
+      itCopiesFilesSuccessfully(() => ({
+        app,
+        subfolder: 'app-with-slash',
+        totalFiles: 4,
+        withBackup: opts.withBackup,
+      }))
+    })
   }
 
   describe('when command called without --backup option', () => {

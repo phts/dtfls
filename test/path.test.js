@@ -81,6 +81,12 @@ describe('#path', () => {
       it('returns specified path from path.user.js', () => {
         expect(output).to.equal('/path/to/my-app')
       })
+
+      it('ignores slashes in app name', () => {
+        app = 'my-app/'
+        output = pathCommand(app)
+        expect(output).to.equal('/path/to/my-app')
+      })
     })
   })
 })
