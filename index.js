@@ -12,6 +12,7 @@ const commands = require('./commands')
 program
   .name(packageJson.name)
   .version(packageJson.version)
+  .description(packageJson.description)
   .allowUnknownOption(false)
   .usage('[options] <command>')
   .action(() => program.help())
