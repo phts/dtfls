@@ -10,6 +10,8 @@
   "engineStrict": true,
   "scripts": {
     "clean-fixtures": "node ./scripts/cleanFixtures.js",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
     "test": "mocha test/*.test.js"
   },
   "repository": {
@@ -36,6 +38,8 @@
     "untildify": "^3.0.3"
   },
   "devDependencies": {
+    "@phts/eslint-config": "^1.0.0",
+    "eslint": "^5.2.0",
     "expect.js": "^0.3.1",
     "mocha": "^5.2.0",
     "sinon": "^5.0.10"
