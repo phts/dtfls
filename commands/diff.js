@@ -7,7 +7,7 @@ const forEachFileOfEachApp = require('../utils/forEachFileOfEachApp')
 module.exports = {
   command: 'diff <app...>',
   alias: 'df',
-  description: 'print difference between local and outside configs',
+  description: 'print difference between local and system configs',
   action: apps => {
     const output = new CommandResult()
 
