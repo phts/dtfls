@@ -82,7 +82,7 @@ Local repo structure:
       |  \_ .zshrc
       |
       |_ path.user.json
-      \_ postinstall.user.js
+      \_ postinstall.user
 
 And a workflow example:
 
