@@ -1,9 +1,13 @@
+#!/usr/bin/env bash
+
+INITIAL_PWD=$PWD
 app="$1"
 
 case $app in
   some-app)
     cd ~/.config/some-app
-    # perform here some app-specific actions
-    cd -
+    # perform some app-specific actions here
     ;;
 esac
+
+cd "$INITIAL_PWD"
