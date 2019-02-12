@@ -4,7 +4,7 @@
 
 Back up and restore your config files.
 
-This is a port of [dotfiles](https://github.com/phts/dotfiles) to Node.js.
+This is a redevelopment of [dotfiles](https://github.com/phts/dotfiles) (which was written on shell script) to Node.js.
 
 ## Requirements
 
