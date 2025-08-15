@@ -1,3 +1,4 @@
+'use strict'
 const path = require('path')
 const fs = require('fs')
 const sh = require('shelljs')
@@ -14,35 +15,62 @@ module.exports = {
 
       const appWithDotfileFolder = path.join(LOCALCONF_FOLDER, 'app-with-rootdotfile')
       sh.mkdir('-p', appWithDotfileFolder)
-      fs.writeFileSync(path.join(LOCALCONF_FOLDER, 'app-with-rootdotfile', '.eq-rootconfig'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(LOCALCONF_FOLDER, 'app-with-rootdotfile', '.df1-rootconfig'), 'eq-line1\neq-line2\napp-with-rootdotfile local new line\neq-line3')
-      fs.writeFileSync(path.join(LOCALCONF_FOLDER, 'app-with-rootdotfile', '.df2-rootconfig'), 'eq-line1\neq-line2\neq-line3')
+      fs.writeFileSync(
+        path.join(LOCALCONF_FOLDER, 'app-with-rootdotfile', '.eq-rootconfig'),
+        'eq-line1\neq-line2\neq-line3'
+      )
+      fs.writeFileSync(
+        path.join(LOCALCONF_FOLDER, 'app-with-rootdotfile', '.df1-rootconfig'),
+        'eq-line1\neq-line2\napp-with-rootdotfile local new line\neq-line3'
+      )
+      fs.writeFileSync(
+        path.join(LOCALCONF_FOLDER, 'app-with-rootdotfile', '.df2-rootconfig'),
+        'eq-line1\neq-line2\neq-line3'
+      )
 
-      const appWithNestedFolders = path.join(LOCALCONF_FOLDER, 'app-with-nested-folders', 'app-with-nested-folders', 'nested1', 'nested2')
+      const appWithNestedFolders = path.join(
+        LOCALCONF_FOLDER,
+        'app-with-nested-folders',
+        'app-with-nested-folders',
+        'nested1',
+        'nested2'
+      )
       sh.mkdir('-p', appWithNestedFolders)
       fs.writeFileSync(path.join(appWithNestedFolders, 'eqfile.txt'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(appWithNestedFolders, 'dffile1.txt'), 'eq-line1\neq-line2\napp-with-nested-folders local new line\neq-line3')
+      fs.writeFileSync(
+        path.join(appWithNestedFolders, 'dffile1.txt'),
+        'eq-line1\neq-line2\napp-with-nested-folders local new line\neq-line3'
+      )
       fs.writeFileSync(path.join(appWithNestedFolders, 'dffile2.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithNestedFolders, 'newfile.txt'), 'eq-line1\neq-line2\neq-line3')
 
       const appWithSpace = path.join(LOCALCONF_FOLDER, 'app-with-space', 'configs with space')
       sh.mkdir('-p', appWithSpace)
       fs.writeFileSync(path.join(appWithSpace, 'eq file.txt'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(appWithSpace, 'df file1.txt'), 'eq-line1\neq-line2\napp-with-space local new line\neq-line3')
+      fs.writeFileSync(
+        path.join(appWithSpace, 'df file1.txt'),
+        'eq-line1\neq-line2\napp-with-space local new line\neq-line3'
+      )
       fs.writeFileSync(path.join(appWithSpace, 'df file2.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithSpace, 'new file.txt'), 'eq-line1\neq-line2\neq-line3')
 
       const appWithNonAscii = path.join(LOCALCONF_FOLDER, 'app-with-non-ascii', 'приложение')
       sh.mkdir('-p', appWithNonAscii)
       fs.writeFileSync(path.join(appWithNonAscii, 'eq конфиг.txt'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг1.txt'), 'eq-line1\neq-line2\napp-with-non-ascii local new line\neq-line3')
+      fs.writeFileSync(
+        path.join(appWithNonAscii, 'df конфиг1.txt'),
+        'eq-line1\neq-line2\napp-with-non-ascii local new line\neq-line3'
+      )
       fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг2.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithNonAscii, 'new конфиг.txt'), 'eq-line1\neq-line2\neq-line3')
 
       const appWithSlash = path.join(LOCALCONF_FOLDER, 'app-with-slash', 'app-with-slash')
       sh.mkdir('-p', appWithSlash)
       fs.writeFileSync(path.join(appWithSlash, 'eqfile.txt'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(appWithSlash, 'dffile1.txt'), 'eq-line1\neq-line2\napp-with-slash local new line\neq-line3')
+      fs.writeFileSync(
+        path.join(appWithSlash, 'dffile1.txt'),
+        'eq-line1\neq-line2\napp-with-slash local new line\neq-line3'
+      )
       fs.writeFileSync(path.join(appWithSlash, 'dffile2.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithSlash, 'newfile.txt'), 'eq-line1\neq-line2\neq-line3')
     }
@@ -52,30 +80,45 @@ module.exports = {
 
       fs.writeFileSync(path.join(SYSCONF_FOLDER, '.eq-rootconfig'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(SYSCONF_FOLDER, '.df1-rootconfig'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(SYSCONF_FOLDER, '.df2-rootconfig'), 'eq-line1\neq-line2\napp-with-rootdotfile sys new line\neq-line3')
+      fs.writeFileSync(
+        path.join(SYSCONF_FOLDER, '.df2-rootconfig'),
+        'eq-line1\neq-line2\napp-with-rootdotfile sys new line\neq-line3'
+      )
 
       const appWithNestedFolders = path.join(SYSCONF_FOLDER, 'app-with-nested-folders', 'nested1', 'nested2')
       sh.mkdir('-p', appWithNestedFolders)
       fs.writeFileSync(path.join(appWithNestedFolders, 'eqfile.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithNestedFolders, 'dffile1.txt'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(appWithNestedFolders, 'dffile2.txt'), 'eq-line1\neq-line2\napp-with-nested-folders sys new line\neq-line3')
+      fs.writeFileSync(
+        path.join(appWithNestedFolders, 'dffile2.txt'),
+        'eq-line1\neq-line2\napp-with-nested-folders sys new line\neq-line3'
+      )
 
       sh.mkdir('-p', path.join(SYSCONF_FOLDER, 'configs with space'))
       fs.writeFileSync(path.join(SYSCONF_FOLDER, 'configs with space', 'eq file.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(SYSCONF_FOLDER, 'configs with space', 'df file1.txt'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(SYSCONF_FOLDER, 'configs with space', 'df file2.txt'), 'eq-line1\neq-line2\napp-with-space sys new line\neq-line3')
+      fs.writeFileSync(
+        path.join(SYSCONF_FOLDER, 'configs with space', 'df file2.txt'),
+        'eq-line1\neq-line2\napp-with-space sys new line\neq-line3'
+      )
 
       const appWithNonAscii = path.join(SYSCONF_FOLDER, 'приложение')
       sh.mkdir('-p', appWithNonAscii)
       fs.writeFileSync(path.join(appWithNonAscii, 'eq конфиг.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг1.txt'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(appWithNonAscii, 'df конфиг2.txt'), 'eq-line1\neq-line2\napp-with-non-ascii sys new line\neq-line3')
+      fs.writeFileSync(
+        path.join(appWithNonAscii, 'df конфиг2.txt'),
+        'eq-line1\neq-line2\napp-with-non-ascii sys new line\neq-line3'
+      )
 
       const appWithSlash = path.join(SYSCONF_FOLDER, 'app-with-slash')
       sh.mkdir('-p', appWithSlash)
       fs.writeFileSync(path.join(appWithSlash, 'eqfile.txt'), 'eq-line1\neq-line2\neq-line3')
       fs.writeFileSync(path.join(appWithSlash, 'dffile1.txt'), 'eq-line1\neq-line2\neq-line3')
-      fs.writeFileSync(path.join(appWithSlash, 'dffile2.txt'), 'eq-line1\neq-line2\napp-with-slash sys new line\neq-line3')
+      fs.writeFileSync(
+        path.join(appWithSlash, 'dffile2.txt'),
+        'eq-line1\neq-line2\napp-with-slash sys new line\neq-line3'
+      )
     }
   },
   cleanFixtures() {

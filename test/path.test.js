@@ -1,15 +1,13 @@
+'use strict'
 require('./setupTests')
 
-const expect = require('expect.js')
 const path = require('path')
 const fs = require('fs')
+const expect = require('expect.js')
 const sh = require('shelljs')
 
-const {
-  LOCALCONF_FOLDER,
-  setupFixtures,
-} = require('./setupFixtures')
 const pathCommand = require('../commands/path').action
+const {LOCALCONF_FOLDER, setupFixtures} = require('./setupFixtures')
 
 describe('#path', () => {
   let app

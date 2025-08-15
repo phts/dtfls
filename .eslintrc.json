@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "@phts"
-  ],
+  "extends": ["@phts"],
 
   "env": {
     "node": true,
@@ -14,6 +12,7 @@
       "env": {
         "mocha": true
       }
-    }
+    },
+    {"files": "*", "extends": ["@phts/eslint-config/addons/prettier"]}
   ]
 }

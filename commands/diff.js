@@ -1,3 +1,4 @@
+'use strict'
 const sh = require('shelljs')
 const shellescape = require('shell-escape')
 
@@ -8,7 +9,7 @@ module.exports = {
   command: 'diff <app...>',
   alias: 'df',
   description: 'print difference between local and system configs',
-  action: apps => {
+  action: (apps) => {
     const output = new CommandResult()
 
     forEachFileOfEachApp(apps, ({localconfFile, sysconfFile}) => {

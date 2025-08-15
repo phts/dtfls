@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
-const packageJson = require('./package.json')
+'use strict'
 const program = require('commander')
 
 const sh = require('shelljs')
+const packageJson = require('./package.json')
+
 sh.config.silent = true
 sh.config.verbose = false
 
@@ -19,13 +21,10 @@ program
 
 for (const command in commands) {
   const data = commands[command]
-  const cmd = program
-    .command(data.command)
-    .alias(data.alias)
-    .description(data.description)
+  const cmd = program.command(data.command).alias(data.alias).description(data.description)
 
   if (data.options) {
-    data.options.forEach(opts => {
+    data.options.forEach((opts) => {
       cmd.option(...opts)
     })
   }

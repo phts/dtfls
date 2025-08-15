@@ -10,8 +10,8 @@
   "engineStrict": true,
   "scripts": {
     "clean-fixtures": "node ./scripts/cleanFixtures.js",
+    "format": "prettier -w '*.{json,md}' && eslint . --fix",
     "lint": "eslint .",
-    "lint-fix": "eslint . --fix",
     "test": "mocha test/*.test.js"
   },
   "repository": {
@@ -38,10 +38,12 @@
     "untildify": "^3.0.3"
   },
   "devDependencies": {
-    "@phts/eslint-config": "^1.0.0",
-    "eslint": "^5.2.0",
+    "@phts/eslint-config": "^1.10.1",
+    "@phts/prettier-config": "^1.2.0",
+    "eslint": "^7.32.0",
     "expect.js": "^0.3.1",
     "mocha": "^5.2.0",
+    "prettier": "^2.8.8",
     "sinon": "^5.0.10"
   }
 }

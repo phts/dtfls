@@ -8,7 +8,7 @@ This is a redevelopment of [dotfiles](https://github.com/phts/dotfiles) (which w
 
 ## Requirements
 
-* Node v6.0.0 or higher
+- Node v6.0.0 or higher
 
 ## Install
 
@@ -22,23 +22,23 @@ npm install -g dtfls
 
 ### CLI
 
-* Print difference between local and system configs
+- Print difference between local and system configs
 
         dtfls diff <APP...>
 
-* Install local configs to the system
+- Install local configs to the system
 
         dtfls install <APP...>
 
-* Print system installation path
+- Print system installation path
 
         dtfls path <APP>
 
-* Run post-install scripts (it is being run automatically after install)
+- Run post-install scripts (it is being run automatically after install)
 
         dtfls postinstall <APP...>
 
-* Pull configs from the system to the local folder
+- Pull configs from the system to the local folder
 
         dtfls pull <APP...>
 

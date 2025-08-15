@@ -1,17 +1,14 @@
+'use strict'
 require('./setupTests')
 
-const expect = require('expect.js')
 const path = require('path')
 const fs = require('fs')
+const expect = require('expect.js')
 const sh = require('shelljs')
 const sinon = require('sinon')
 
-const {
-  LOCALCONF_FOLDER,
-  SYSCONF_FOLDER,
-  setupFixtures,
-} = require('./setupFixtures')
 const postinstall = require('../commands/postinstall').action
+const {LOCALCONF_FOLDER, SYSCONF_FOLDER, setupFixtures} = require('./setupFixtures')
 
 const POSTINSTALL_FILENAME = 'postinstall.user'
 const POSTINSTALL_FILE_PATH = path.join(LOCALCONF_FOLDER, POSTINSTALL_FILENAME)

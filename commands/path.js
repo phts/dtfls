@@ -1,6 +1,7 @@
+'use strict'
 const path = require('path')
-const sh = require('shelljs')
 const fs = require('fs')
+const sh = require('shelljs')
 const withoutSlash = require('../utils/withoutSlash')
 
 const DEFAULT_PATH = '~'
@@ -9,7 +10,7 @@ const PATH_USER_FILENAME = 'path.user.json'
 module.exports = {
   command: 'path <app>',
   description: 'print system installation path',
-  action: app => {
+  action: (app) => {
     app = withoutSlash(app)
 
     const pathUserFile = path.resolve(process.cwd(), PATH_USER_FILENAME)

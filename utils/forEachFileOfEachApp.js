@@ -1,3 +1,4 @@
+'use strict'
 const path = require('path')
 const sh = require('shelljs')
 const shellescape = require('shell-escape')
@@ -9,14 +10,14 @@ const withoutAppName = require('./withoutAppName')
 module.exports = function forEachFileOfEachApp(apps, callback) {
   const cwd = process.cwd()
 
-  apps.forEach(app => {
+  apps.forEach((app) => {
     const sysconfFolder = untildify(pathCommand.action(app))
     const localconfFodler = path.relative(cwd, path.resolve(app))
     const findArgs = shellescape([localconfFodler, '-type', 'f'])
-    sh.exec(`find ${findArgs}`).stdout
-      .split('\n')
-      .filter(x => !!x)
-      .forEach(localconfFile => {
+    sh.exec(`find ${findArgs}`)
+      .stdout.split('\n')
+      .filter((x) => !!x)
+      .forEach((localconfFile) => {
         const relativeFile = withoutAppName(localconfFile)
         const sysconfFile = path.join(sysconfFolder, relativeFile)
 

@@ -1,16 +1,15 @@
+'use strict'
 const sh = require('shelljs')
 
-const postinstall = require('./postinstall').action
 const CommandResult = require('../utils/CommandResult')
 const forEachFileOfEachApp = require('../utils/forEachFileOfEachApp')
+const postinstall = require('./postinstall').action
 
 module.exports = {
   command: 'install <app...>',
   alias: 'i',
   description: 'install local configs to the system',
-  options: [
-    ['--backup', 'create backups of original files'],
-  ],
+  options: [['--backup', 'create backups of original files']],
   action: (apps, program) => {
     const output = new CommandResult()
 
@@ -24,7 +23,7 @@ module.exports = {
       output.addShellOutput(result)
     })
 
-    apps.forEach(app => {
+    apps.forEach((app) => {
       postinstall([app])
     })
 

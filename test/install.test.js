@@ -1,18 +1,15 @@
+'use strict'
 require('./setupTests')
 
-const expect = require('expect.js')
 const path = require('path')
 const fs = require('fs')
+const expect = require('expect.js')
 const sh = require('shelljs')
 const sinon = require('sinon')
 
-const {
-  LOCALCONF_FOLDER,
-  SYSCONF_FOLDER,
-  setupFixtures,
-} = require('./setupFixtures')
 const pathCommand = require('../commands/path')
 const postinstallCommand = require('../commands/postinstall')
+const {LOCALCONF_FOLDER, SYSCONF_FOLDER, setupFixtures} = require('./setupFixtures')
 
 const BACKUP_FILE_EXT = '.bak'
 
@@ -44,16 +41,17 @@ describe('#install', () => {
   function itCopiesFilesSuccessfully(context) {
     function getFilesInSysconfSubfolder() {
       const sysSubfolder = path.join(SYSCONF_FOLDER, context().subfolder)
-      return sh.find(sysSubfolder)
-        .filter(f => sh.test('-f', f))
-        .filter(f => path.dirname(f).replace(/\\/g, '/') === sysSubfolder.replace(/\\/g, '/'))
+      return sh
+        .find(sysSubfolder)
+        .filter((f) => sh.test('-f', f))
+        .filter((f) => path.dirname(f).replace(/\\/g, '/') === sysSubfolder.replace(/\\/g, '/'))
     }
 
     it('copies local config files to system config folder', () => {
       let fileCount = 0
       getFilesInSysconfSubfolder()
-        .filter(f => !context().withBackup || context().withBackup && !f.includes(BACKUP_FILE_EXT))
-        .forEach(sysconfFile => {
+        .filter((f) => !context().withBackup || (context().withBackup && !f.includes(BACKUP_FILE_EXT)))
+        .forEach((sysconfFile) => {
           const sysconfFileContent = fs.readFileSync(sysconfFile).toString()
           expect(sysconfFileContent).not.to.equal('')
           expect(sysconfFileContent).not.to.contain('sys')
@@ -63,7 +61,7 @@ describe('#install', () => {
     })
 
     it('does not amend local config files', () => {
-      sh.find(LOCALCONF_FOLDER).forEach(localconfFile => {
+      sh.find(LOCALCONF_FOLDER).forEach((localconfFile) => {
         if (!sh.test('-f', localconfFile)) {
           return
         }
@@ -86,8 +84,8 @@ describe('#install', () => {
     if (context().withBackup) {
       it(`creates a file with ${BACKUP_FILE_EXT} extension near original file with original content`, () => {
         getFilesInSysconfSubfolder()
-          .filter(f => !f.includes(BACKUP_FILE_EXT))
-          .forEach(sysconfFile => {
+          .filter((f) => !f.includes(BACKUP_FILE_EXT))
+          .forEach((sysconfFile) => {
             const bakFile = sysconfFile + BACKUP_FILE_EXT
             expect(sh.test('-f', bakFile)).to.be(true)
 
@@ -193,8 +191,8 @@ describe('#install', () => {
     after(() => {
       setupFixtures({forceSystem: true})
       sh.find(path.join(SYSCONF_FOLDER))
-        .filter(f => f.includes(BACKUP_FILE_EXT))
-        .forEach(file => {
+        .filter((f) => f.includes(BACKUP_FILE_EXT))
+        .forEach((file) => {
           fs.unlinkSync(file)
         })
     })

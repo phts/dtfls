@@ -1,3 +1,4 @@
+'use strict'
 const sh = require('shelljs')
 
 const CommandResult = require('../utils/CommandResult')
@@ -7,7 +8,7 @@ module.exports = {
   command: 'pull <app...>',
   alias: 'p',
   description: 'pull configs from the system to the local folder',
-  action: apps => {
+  action: (apps) => {
     const output = new CommandResult()
 
     forEachFileOfEachApp(apps, ({localconfFile, sysconfFile}) => {

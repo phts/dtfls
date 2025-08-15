@@ -1,18 +1,15 @@
+'use strict'
 require('./setupTests')
 
-const expect = require('expect.js')
 const path = require('path')
 const fs = require('fs')
+const expect = require('expect.js')
 const sh = require('shelljs')
 const sinon = require('sinon')
 
-const {
-  LOCALCONF_FOLDER,
-  SYSCONF_FOLDER,
-  setupFixtures,
-} = require('./setupFixtures')
 const pathCommand = require('../commands/path')
 const pull = require('../commands/pull').action
+const {LOCALCONF_FOLDER, SYSCONF_FOLDER, setupFixtures} = require('./setupFixtures')
 
 describe('#pull', () => {
   let app
@@ -31,7 +28,7 @@ describe('#pull', () => {
 
   function itCopiesFilesSuccessfully(context) {
     it('copies files which exist in local config folder from system config folder', () => {
-      sh.find(path.join(LOCALCONF_FOLDER, context().app)).forEach(localconfFile => {
+      sh.find(path.join(LOCALCONF_FOLDER, context().app)).forEach((localconfFile) => {
         if (!sh.test('-f', localconfFile)) {
           return
         }
@@ -42,7 +39,7 @@ describe('#pull', () => {
     })
 
     it('does not amend system config files', () => {
-      sh.find(SYSCONF_FOLDER).forEach(sysconfFile => {
+      sh.find(SYSCONF_FOLDER).forEach((sysconfFile) => {
         if (!sh.test('-f', sysconfFile)) {
           return
         }
