@@ -8,7 +8,7 @@ This is a redevelopment of [dotfiles](https://github.com/phts/dotfiles) (which w
 
 ## Requirements
 
-- Node v6.0.0 or higher
+- Node v22 or higher
 
 ## Install
 
@@ -24,26 +24,53 @@ npm install -g dtfls
 
 - Print difference between local and system configs
 
-        dtfls diff <APP...>
+  ```sh
+  dtfls diff <APP...>
+  ```
 
 - Install local configs to the system
 
-        dtfls install <APP...>
+  ```sh
+  dtfls install <APP...>
+  ```
 
 - Print system installation path
 
-        dtfls path <APP>
+  ```sh
+  dtfls path <APP>
+  ```
 
 - Run post-install scripts (it is being run automatically after install)
 
-        dtfls postinstall <APP...>
+  ```sh
+  dtfls postinstall <APP...>
+  ```
 
 - Pull configs from the system to the local folder
 
-        dtfls pull <APP...>
+  ```sh
+  dtfls pull <APP...>
+  ```
 
 Use `dtfls --help` to read a common usage information and
 `dtfls <command> --help` to read about a specific command.
+
+### `--cmd` option example
+
+path.user.json:
+
+```
+{
+  "my-app": "remote-host@my-user:/"
+}
+```
+
+and run:
+
+```sh
+dtfls pull --cmd=scp my-app
+dtfls install --cmd=scp my-app
+```
 
 ### Folder structure
 
@@ -62,33 +89,37 @@ added in [`postinstall.user`](https://github.com/phts/dtfls/blob/master/examples
 
 Local repo structure:
 
-    my configs
-      \_ git
-      |  \_ .gitconfig
-      |
-      |_ profile
-      |  \_ .profile
-      |
-      |_ sublime-text-3
-      |  \_ .config
-      |     \_ sublime-text-3
-      |        \_ Packages
-      |           \_ User
-      |              |_ Default (Linux).sublime-keymap
-      |              |_ Default (Linux).sublime-mousemap
-      |              \_ Preferences.sublime-settings
-      |
-      |_ zsh
-      |  \_ .zshrc
-      |
-      |_ path.user.json
-      \_ postinstall.user
+```
+my configs
+  \_ git
+  |  \_ .gitconfig
+  |
+  |_ profile
+  |  \_ .profile
+  |
+  |_ sublime-text-3
+  |  \_ .config
+  |     \_ sublime-text-3
+  |        \_ Packages
+  |           \_ User
+  |              |_ Default (Linux).sublime-keymap
+  |              |_ Default (Linux).sublime-mousemap
+  |              \_ Preferences.sublime-settings
+  |
+  |_ zsh
+  |  \_ .zshrc
+  |
+  |_ path.user.json
+  \_ postinstall.user
+```
 
 And a workflow example:
 
-    $ cd "my configs"
-    $ git pull                          <--- pull changes from your repo with configs
-    $ dtfls install git                 <--- install git configs from the repo to system
-    $ dtfls pull sublime-text-3         <--- copy Sublime Text configs from system to the local repo
-    $ git commit -am "Update Sublime Text configs"    <--- commit updated configs
-    $ git push                                        <--- and push
+```sh
+cd "my configs"
+git pull                          <--- pull changes from your repo with configs
+dtfls install git                 <--- install git configs from the repo to system
+dtfls pull sublime-text-3         <--- copy Sublime Text configs from system to the local repo
+git commit -am "Update Sublime Text configs"    <--- commit updated configs
+git push                                        <--- and push
+```
