@@ -35,7 +35,7 @@
     "require-directory": "^2.1.1",
     "shell-escape": "^0.2.0",
     "shelljs": "^0.8.5",
-    "untildify": "^3.0.3"
+    "untildify": "^4.0.0"
   },
   "devDependencies": {
     "@phts/eslint-config": "^2.1.1",
