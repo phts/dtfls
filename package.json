@@ -38,12 +38,12 @@
     "untildify": "^3.0.3"
   },
   "devDependencies": {
-    "@phts/eslint-config": "^1.10.1",
+    "@phts/eslint-config": "^2.1.1",
     "@phts/prettier-config": "^1.2.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.57.1",
     "expect.js": "^0.3.1",
-    "mocha": "^5.2.0",
-    "prettier": "^2.8.8",
-    "sinon": "^5.0.10"
+    "mocha": "^11.7.2",
+    "prettier": "^3.6.2",
+    "sinon": "^21.0.0"
   }
 }
