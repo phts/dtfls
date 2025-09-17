@@ -9,8 +9,6 @@ const pathCommand = require('../commands/path')
 const diff = require('../commands/diff').action
 const {LOCALCONF_FOLDER, SYSCONF_FOLDER, setupFixtures} = require('./setupFixtures')
 
-const isWindows = process.platform === 'win32'
-
 describe('#diff', () => {
   let app
   let output
@@ -90,22 +88,7 @@ describe('#diff', () => {
       output = diff([app])
     })
 
-    describe('when running on Windows', () => {
-      it(
-        'does not support non-ascii characters',
-        isWindows
-          ? () => {
-              expect(output).to.contain('No such file or directory')
-              expect(output).not.to.contain(`< ${app} local new line`)
-              expect(output).not.to.contain(`> ${app} sys new line`)
-            }
-          : null
-      )
-    })
-
-    describe('when running on *nix', () => {
-      itPrintsDifference(() => ({output, app}), isWindows)
-    })
+    itPrintsDifference(() => ({output, app}))
   })
 
   describe('when command is called with a slash in the app name', () => {
