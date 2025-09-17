@@ -7,6 +7,11 @@
   "engines": {
     "node": ">=22.0.0"
   },
+  "files": [
+    "commands/",
+    "utils/",
+    "index.js"
+  ],
   "engineStrict": true,
   "scripts": {
     "clean-fixtures": "node ./scripts/cleanFixtures.js",
