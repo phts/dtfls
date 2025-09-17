@@ -40,7 +40,7 @@ describe('#install', () => {
 
   function itCopiesFilesSuccessfully(context) {
     function getFilesInSysconfSubfolder() {
-      const sysSubfolder = path.join(SYSCONF_FOLDER, context().subfolder)
+      const sysSubfolder = path.join(SYSCONF_FOLDER, context().subfolder).replace(/\\/g, '/')
       return sh
         .find(sysSubfolder)
         .filter((f) => sh.test('-f', f))
